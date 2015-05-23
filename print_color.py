@@ -4,6 +4,8 @@
 import sys
 import os, ctypes, platform
 
+console_encoding = sys.getfilesystemencoding()
+
 class print_style:
     engine = None
 
@@ -155,13 +157,24 @@ if 'windows' == platform.system().lower():
 else:
     print_style.engine = TermColor
 
+def cprintf_unpack_text(fmt, text):
+    if len(text) > 0:
+        try:
+            ret = fmt.format(*text)
+            return ret
+        except Exception:
+            ret = fmt.decode(console_encoding).format(*text)
+            return ret
+    else:
+        return fmt
+
 def cprintf_stdout(options, fmt, *text):
     cp = print_style.engine()
-    cp.stdout_with_color(options, fmt.format(*text))
+    cp.stdout_with_color(options, cprintf_unpack_text(fmt, text))
 
 def cprintf_stderr(options, fmt, *text):
     cp = print_style.engine()
-    cp.stderr_with_color(options, fmt.format(*text))
+    cp.stderr_with_color(options, cprintf_unpack_text(fmt, text))
 
 if __name__ == "__main__":
     pass
