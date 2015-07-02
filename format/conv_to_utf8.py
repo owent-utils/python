@@ -48,7 +48,7 @@ if __name__ == "__main__":
             file_buffers = f.read()
             f.close()
             detected_info = chardet.detect(file_buffers)
-            if 'encoding' in detected_info:
+            if detected_info['encoding'] is not None:
                 if detected_info['encoding'].lower() == 'utf-8':
                     if enable_bom and file_buffers[0:3] == "\xEF\xBB\xBF":
                         stats_skip_num = stats_skip_num + 1
@@ -91,5 +91,8 @@ if __name__ == "__main__":
                     except Exception:
                         stats_failed_num = stats_failed_num + 1
                         print(file_path + ' convert from ' + detected_info['encoding'] + ' to utf-8 ' + suffix + ' failed.')
+            else:
+                print(file_path + ' can not detect encoding')
+                stats_skip_num = stats_skip_num + 1
     print('')
     print('all jobs done. convert number: {0}, fix bom number: {1}, skip number: {2}, failed number: {3}'.format(stats_conv_num, stats_fix_bom_num, stats_skip_num, stats_failed_num))
