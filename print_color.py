@@ -270,9 +270,9 @@ if __name__ == "__main__":
     parser = OptionParser(usage)
 
     parser.add_option("-v", "--version", action="store_true", help="show version and exit", dest="verbose")
-    parser.add_option("-c", "--color", action="store", help="set font color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", dest="color")
-    parser.add_option("-b", "--background-color", action="store", help="set background color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", dest="background_color")
-    parser.add_option("-B", "--bold", action="store_true", help="set font weight to bold", dest="bold")
+    parser.add_option("-c", "--color", action="append", help="set font color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", dest="color")
+    parser.add_option("-b", "--background-color", action="append", help="set background color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", dest="background_color")
+    parser.add_option("-B", "--bold", action="append_const", help="set font weight to bold", const=print_style.FW_BOLD, dest="style")
     parser.add_option("-m", "--mode", action="store", help="set mode.(any of: auto, term, win32_console, none, html)", dest="mode")
     parser.add_option("-s", "--output-stream", action="store", help="set output stream.(any of: stdout, stderr)", dest="ostream", default="stdout")
 
@@ -285,18 +285,15 @@ if __name__ == "__main__":
     print_stream = 'stdout'
     print_options = []
 
-    if options.color:
-        full_key = ('FC_' + options.color).upper()
-        if full_key in print_style.__dict__ :
-            print_options.append(print_style.__dict__[full_key])
+    fc_list = ['FC_' + x.upper() for x in options.color or [] ]
+    bk_list = ['BC_' + y.upper() for y in options.background_color or [] ]
+    for style_list in [ fc_list, bk_list ]:
+        for style_name in style_list:
+            if style_name in print_style.__dict__ :
+                print_options.append(print_style.__dict__[style_name])
 
-    if options.background_color:
-        full_key = ('BC_' + options.background_color).upper()
-        if full_key in print_style.__dict__ :
-            print_options.append(print_style.__dict__[full_key])
-
-    if options.bold:
-        print_options.append(print_style.FW_BOLD)
+    for style_code in options.style or []:
+        print_options.append(style_code)
 
     if options.mode:
         cprintf_set_mode(options.mode)
