@@ -269,16 +269,16 @@ if __name__ == "__main__":
     usage = "usage: %prog [options...] <format message> [format parameters...]"
     parser = OptionParser(usage)
 
-    parser.add_option("-v", "--version", action="store_true", help="show version and exit", dest="verbose")
-    parser.add_option("-c", "--color", action="append", help="set font color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", dest="color")
-    parser.add_option("-b", "--background-color", action="append", help="set background color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", dest="background_color")
+    parser.add_option("-v", "--version", action="store_true", help="show version and exit", dest="version")
+    parser.add_option("-c", "--color", action="append", help="set font color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", metavar="<color>", dest="color")
+    parser.add_option("-b", "--background-color", action="append", help="set background color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", metavar="<background color>", dest="background_color")
     parser.add_option("-B", "--bold", action="append_const", help="set font weight to bold", const=print_style.FW_BOLD, dest="style")
-    parser.add_option("-m", "--mode", action="store", help="set mode.(any of: auto, term, win32_console, none, html)", dest="mode")
-    parser.add_option("-s", "--output-stream", action="store", help="set output stream.(any of: stdout, stderr)", dest="ostream", default="stdout")
+    parser.add_option("-m", "--mode", action="store", help="set mode.(any of: auto, term, win32_console, none, html)", metavar="<output mode>", dest="mode")
+    parser.add_option("-s", "--output-stream", action="store", help="set output stream.(any of: stdout, stderr)", metavar="<ostream>", dest="ostream", default="stdout")
 
     (options, left_args) = parser.parse_args()
 
-    if options.verbose:
+    if options.version:
         print(print_style.version)
         exit(0)
 
