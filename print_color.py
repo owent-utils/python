@@ -284,6 +284,7 @@ if __name__ == "__main__":
     from optparse import OptionParser
     usage = "usage: %prog [options...] <format message> [format parameters...]"
     parser = OptionParser(usage)
+    parser.disable_interspersed_args()
 
     parser.add_option("-v", "--version", action="store_true", help="show version and exit", dest="version")
     parser.add_option("-c", "--color", action="append", help="set font color.(any of: black, blue, green, cyan, red, magenta, yellow, white)", metavar="<color>", dest="color")
