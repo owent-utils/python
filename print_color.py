@@ -227,9 +227,9 @@ def cprintf_set_mode(mode_name='auto'):
             term_name = os.getenv('TERM')
             if not term_name is None:
                 term_name = term_name.lower()
-            if 'xterm' == term_name[0:5] or 'vt' == term_name[0:2]:
-                cprintf_set_mode('term')
-                return
+                if 'xterm' == term_name[0:5] or 'vt' == term_name[0:2]:
+                    cprintf_set_mode('term')
+                    return
             cprintf_set_mode('win32_console')
         elif os.getenv('ANSI_COLORS_DISABLED') is None:
             cprintf_set_mode('term')
