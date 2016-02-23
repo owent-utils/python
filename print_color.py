@@ -187,7 +187,7 @@ class HtmlColor:
         style = []
         for opt in options:
             if print_style.theme:
-                style.append(HtmlColor.COLOR_MAP[opt].format(print_style.theme + '-'))
+                style.append(HtmlColor.COLOR_MAP[opt].format(print_style.theme))
             else:
                 style.append(HtmlColor.COLOR_MAP[opt].format(''))
 
@@ -200,7 +200,7 @@ class HtmlColor:
         style = []
         for opt in options:
             if print_style.theme:
-                style.append(HtmlColor.COLOR_MAP[opt].format(print_style.theme + '-'))
+                style.append(HtmlColor.COLOR_MAP[opt].format(print_style.theme))
             else:
                 style.append(HtmlColor.COLOR_MAP[opt].format(''))
 
